@@ -2,26 +2,25 @@ name: TikTok to YouTube Bot
 
 on:
   schedule:
-    - cron: '0 * * * *' # တစ်နာရီတစ်ခါ အလိုအလျောက် ပတ်မည်
-  workflow_dispatch: # လက်ဖြင့် စမ်းနှိပ်၍ရအောင်
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-
-      - name: Install dependencies
+      - name: Install dependencies and Update yt-dlp
         run: |
           npm install
-          sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
+          # yt-dlp ကို အမြဲတမ်း နောက်ဆုံး version ဒေါင်းမယ်
+          sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
           sudo chmod a+rx /usr/local/bin/yt-dlp
-
+          yt-dlp -U || true # အထဲကနေ ထပ်ပြီး update စစ်ခိုင်းတာ
       - name: Run Bot
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
