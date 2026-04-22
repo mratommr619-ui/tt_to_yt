@@ -1,0 +1,9 @@
+{
+  "name": "tt-to-yt-bot",
+  "version": "1.0.0",
+  "dependencies": {
+    "firebase-admin": "^11.0.0",
+    "yt-dlp-exec": "^1.0.1",
+    "googleapis": "^105.0.0"
+  }
+}
